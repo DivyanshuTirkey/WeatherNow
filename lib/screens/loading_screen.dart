@@ -10,6 +10,7 @@ import 'dart:convert';
 import '../constants.dart';
 import '../components/bottom_icon.dart';
 import '../location.dart';
+import '../keys.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -31,32 +32,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
     _longitude = location.longitude;
   }
   void getData() async {
-    http.Response response = await http.get(Uri.parse('https://api.openweathermap.org/data/3.0/'
-        'onecall?lat=$_latitude&lon=$_longitude'
-        '&exclude=hourly,daily&'
-        'appid={API key}'));
+    http.Response response = await http.get(Uri.parse('http://api.weatherapi.com/v1/current.json?'
+        'key=$apiKey&'
+        'q=$_latitude,$_longitude&'
+        'aqi=no'
+      )
+    );
 
-    http.Response responseCity = await http.get(
-                                                  Uri.parse(
-                                                    'http://api.openweathermap.org/geo/1.0/reverse?'
-                                                        'lat=$_latitude&lon=$_longitude&limit=3'
-                                                        '&appid={API key}'
-                                                  )
-                                                );
     if(response.statusCode == 200) {
       String data = response.body;
       var decodedData = jsonDecode(data);
-      double temp = decodedData['current']['temp'];
-      String condition = decodedData['current']['weather'][0]['main'];
-    //  gives weather id main description and icon use any.
-
+      double temp = decodedData['current']['temp_c'];
+      String condition = decodedData['current']['condition']['text'];
+      Uri iconLink = decodedData['current']['condition']['icon'];
+      String cityName = decodedData['location']['name'];
     }
-    if(responseCity.statusCode == 200) {
-      String data = responseCity.body;
-      var cityName = jsonDecode(data)[0]['name'];
-
-    }
-
 
   }
 
