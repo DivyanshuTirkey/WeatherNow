@@ -13,7 +13,7 @@ const TextStyle kTitleTextStyle = TextStyle(
 ButtonStyle kAppBarStyle = ButtonStyle(
                                   shape: MaterialStateProperty.all(const CircleBorder()),
                                   backgroundColor: MaterialStateProperty.all(kButtonColor),
-                                  padding: MaterialStateProperty.all(const EdgeInsets.all(10.0)),
+                                  padding: MaterialStateProperty.all(const EdgeInsets.all(8.0)),
                                 );
 const TextStyle kLabelStyle = TextStyle(
                                           fontSize: 35.0,
